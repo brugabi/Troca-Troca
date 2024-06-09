@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  db:
+    image: mysql
+    container_name: mysql-composed
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: R@fa5607123456
+    ports:
+      - "33060:3306"
+
+volumes:
+  portainer_data:

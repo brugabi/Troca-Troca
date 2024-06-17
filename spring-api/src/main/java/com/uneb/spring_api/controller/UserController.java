@@ -1,5 +1,4 @@
-package com.uneb.sistemadetroca_api.controllers;
-
+package com.uneb.spring_api.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uneb.sistemadetroca_api.dtos.UserRecordDto;
-import com.uneb.sistemadetroca_api.models.UserModel;
-import com.uneb.sistemadetroca_api.repositories.UserRepository;
+import com.uneb.spring_api.dtos.UserRecordDto;
+import com.uneb.spring_api.models.UserModel;
+import com.uneb.spring_api.repositories.UserRepository;
 
 import jakarta.validation.Valid;
 

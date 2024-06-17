@@ -1,10 +1,10 @@
-package com.uneb.sistemadetroca_api;
+package com.uneb.spring_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SistemadetrocaApiApplicationTests {
+class SpringApiApplicationTests {
 
 	@Test
 	void contextLoads() {

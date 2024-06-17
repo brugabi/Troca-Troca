@@ -1,4 +1,4 @@
-package com.uneb.sistemadetroca_api.models;
+package com.uneb.spring_api.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -62,4 +62,6 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     
     @NotNull
     private LocalDateTime dataDeCadastro;
+
+
 }

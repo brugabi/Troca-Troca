@@ -1,4 +1,4 @@
-package com.uneb.sistemadetroca_api.dtos;
+package com.uneb.spring_api.dtos;
 
 import java.time.LocalDate;
 

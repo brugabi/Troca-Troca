@@ -18,9 +18,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "usuarios")
 public class UserModel extends RepresentationModel<UserModel> implements Serializable{
     private static final long serialVersionUID = 1L;

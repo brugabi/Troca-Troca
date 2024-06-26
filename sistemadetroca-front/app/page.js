@@ -45,8 +45,8 @@ export default function Login() {
               <input type="password" className="w-[90%] bg-slate-100 focus:outline-none" placeholder="Senha"></input>
             </div>
             <div className="flex w-[50%] p-3 bg-slate-100 gap-1">
-              <Image src="/lock.svg" alt="User Icon" width={25} height={25} />
-              <input type="password" className="w-[90%] bg-slate-100 focus:outline-none" placeholder="Confirmar Senha"></input>
+              <Image src="/calendar_month.svg" alt="User Icon" width={25} height={25} />
+              <input type="date" className="w-[90%] bg-slate-100 focus:outline-none"></input>
             </div>
             <div className="flex w-[50%] justify-center">
               <button className="bg-[#F26329] p-2 rounded-lg text-white">Criar Conta</button>

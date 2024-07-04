@@ -14,5 +14,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.highlighted-links': {
+          '@apply text-[#F26329] font-semibold': {},
+        },
+      });
+    },
+  ],
 };

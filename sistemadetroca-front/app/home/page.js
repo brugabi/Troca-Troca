@@ -2,13 +2,13 @@ import Image from "next/image";
 import Navbar from '@components/navbar';
 import PostCards from '@components/postcards';
 
-export default function HomePage() {
+export default function Proposals() {
     return (
         <div className="flex flex-col min-h-screen bg-slate-100">
             <Navbar />
             <div className="flex flex-row flex-1 overflow-hidden">
                 <div className="flex flex-col w-[15%] bg-white shadow-lg gap-5 p-2">
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 h-[90%]">
                         <span className="font-bold">Categorias</span>
 
                         <div className="flex gap-1 ml-2">

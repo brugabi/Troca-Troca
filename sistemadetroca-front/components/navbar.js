@@ -1,10 +1,22 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 const navBar = () => {
     return (
         <div className="flex items-center w-full h-[4rem] shadow-lg border-2 border-opacity-1 px-[3rem] bg-white">
-            <div className="flex justify-center items-center w-[14rem]">
-                <Image src="/troca-logo.png" alt="Logo" width={120} height={64} />
+            <div className="flex justify-start items-center w-[33%]">
+                <Image src="/image/troca-logo.png" alt="Logo" width={120} height={64} />
+            </div>
+            <div className="flex border rounded-xl p-1 w-[33%]">
+                <input className="w-full focus:outline-none" placeholder="Pesquisar..."/>
+                <Image src="/icons/search.svg" alt="User Icon" width={25} height={25} />
+            </div>
+            <div className="flex w-[33%] justify-end">
+                <nav className="flex gap-4">
+                    <Link href="http://localhost:3000/home/newpost" className="highlighted-links hover:underline">Criar troca</Link>
+                    <Link href="#" className="highlighted-links hover:underline">Propostas</Link>
+                    <Link href="#" className="highlighted-links hover:underline">Sobre nós</Link>
+                </nav>
             </div>
         </div>
     );

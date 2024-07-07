@@ -29,13 +29,13 @@ export default function Proposals() {
         <div className="flex flex-col min-h-screen bg-slate-100">
             <Navbar />
             <div className="flex flex-row flex-1 overflow-hidden">
-                <div className="flex flex-col w-[15%] bg-white shadow-lg gap-5 p-2">
+                <div className="flex flex-col w-auto bg-white shadow-lg gap-5 p-2">
                     <div className="flex flex-col gap-2 h-[90%]">
                         <span className="font-bold">Categorias</span>
 
                         {categorias.map((categoria) => (
                             <div key={categoria.id} className="flex gap-1 ml-2">
-                                <span className="flex items-center font-semibold">{categoria.nome}</span>
+                                <button className="flex font-semibold hover:text-[#F26329]">{categoria.nome}</button>
                             </div>
                         ))}
                     </div>

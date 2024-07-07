@@ -2,11 +2,13 @@
 import { useState } from 'react';
 import Image from "next/image";
 import HendleSignup from "components/handleSignup"
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
 
   const [login, setUsername] = useState('');
   const [senha, setPassword] = useState('');
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
@@ -23,10 +25,11 @@ export default function Login() {
         // Extrai os dados JSON da resposta
         const data = await response.json();
         // Captura o ID do usuário da resposta
-        const userId = data.userId;
-        alert(userId)
+        const userId = data;
+        alert(data)
         console.log('Login concluído! ID do usuário:', userId);
         // Aqui você pode redirecionar o usuário ou realizar outras ações após o login
+        router.push('/home');
       } else {
         // Lógica para tratamento de erro
         console.error('Falha no usuário ou senha:', response.statusText);

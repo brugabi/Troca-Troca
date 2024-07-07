@@ -32,7 +32,7 @@ public class AnuncioService {
         return anuncioRepository.findById(id);
     }
 
-    public List<Anuncio> listarAnuncioByCateogoryId(Long id) {
+    public List<Anuncio> listarAnuncioByCategoryId(Long id) {
         List<Anuncio> todos = anuncioRepository.findAll();
         List<Anuncio> resposta = new ArrayList<>();
         for (Anuncio anuncio:todos) if(anuncio.getDepartamento().getId().equals(id)) resposta.add(anuncio);

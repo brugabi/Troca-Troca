@@ -89,7 +89,7 @@ public class AnuncioController {
 
     @GetMapping("/listar/categoria/{idCategoria}")
     public List<Anuncio> getMethodName(@RequestParam Long idCategoria) {
-        return anuncioService.listarAnuncioByCateogoryId(idCategoria);
+        return anuncioService.listarAnuncioByCategoryId(idCategoria);
     }
     
 

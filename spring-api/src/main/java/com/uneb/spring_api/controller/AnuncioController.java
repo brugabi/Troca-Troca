@@ -9,12 +9,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -54,6 +52,20 @@ public class AnuncioController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String,Object>> verAnuncio(@PathVariable Long id) {
+        Optional<Anuncio> anuncio = anuncioService.verAnuncio(id);
+        Map<String,Object> response = new HashMap<>();
+        response.put("datetime",LocalDateTime.now());
+        if (anuncio.isPresent()) {
+            response.put("anuncio",anuncio.get());
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }else{
+            response.put("Error","Anuncio nao encontrado.");
+            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/listarAnuncios")
     public ResponseEntity<Map<String, Object>> listarAnuncio() {
         Map<String,Object> response = new HashMap<>();
@@ -62,8 +74,32 @@ public class AnuncioController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/usuarios/{userId}/anuncios")
-    public List<Anuncio> getAnunciosByUserId(@PathVariable Long userId) {
-        return anuncioService.getAnunciosByUserId(userId);
+    @GetMapping("/listarAnuncios/{userId}")
+    public ResponseEntity<Map<String,Object>> getAnunciosByUserId(@PathVariable Long userId) {
+        Optional<User> criador = userService.verUsuario(userId);
+        Map<String,Object> response = new HashMap<>();
+        response.put("timestamp",LocalDateTime.now());
+        if (criador.isPresent()) {
+            response.put("anuncios",anuncioService.getAnunciosByUser(criador.get()));
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        } else {
+            response.put("error","O id informado nao esta associado a nenhum usuario.");
+            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Map<String, Object>> deletarAnuncio(@PathVariable Long id) {
+        Optional<Anuncio> anuncio = anuncioService.verAnuncio(id);
+        Map<String,Object> response = new HashMap<>();
+        response.put("timestamp",LocalDateTime.now());
+        if (anuncio.isPresent()) {
+            anuncioService.deletarAnuncio(id);
+            response.put("message","anuncio deletado com sucesso.");
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        } else {
+            response.put("error","Anuncio nao encontrado. Nao foi efetuado o delete.");
+            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnuncioService {
@@ -26,11 +27,15 @@ public class AnuncioService {
         return anuncioRepository.findAll();
     }
 
-    public List<Anuncio> getAnunciosByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            return anuncioRepository.findByCriador(user);
-        }
-        return null; // Ou lançar uma exceção se o usuário não for encontrado
+    public Optional<Anuncio> verAnuncio(Long id) {
+        return anuncioRepository.findById(id);
+    }
+
+    public List<Anuncio> getAnunciosByUser(User criador) {
+        return anuncioRepository.findByCriador(criador);
+    }
+    public Void deletarAnuncio(Long id){
+        anuncioRepository.deleteById(id);
+        return null;
     }
 }

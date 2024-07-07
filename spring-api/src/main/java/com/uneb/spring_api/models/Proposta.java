@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Table(name = "proposta")
 public class Proposta extends RepresentationModel<Proposta> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

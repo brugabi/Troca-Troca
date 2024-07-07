@@ -5,20 +5,18 @@ import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Proposta;
 import com.uneb.spring_api.models.Status;
 import com.uneb.spring_api.models.User;
-import com.uneb.spring_api.repositories.AnuncioRepository;
-import com.uneb.spring_api.repositories.PropostaRepository;
-import com.uneb.spring_api.repositories.StatusRepository;
-import com.uneb.spring_api.repositories.UserRepository;
+import com.uneb.spring_api.service.AnuncioService;
+import com.uneb.spring_api.service.PropostaService;
+import com.uneb.spring_api.service.StatusService;
+import com.uneb.spring_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,24 +25,24 @@ import java.util.Optional;
 public class PropostaController {
 
     @Autowired
-    private PropostaRepository propostaRepository;
+    private PropostaService propostaService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private AnuncioRepository anuncioRepository;
+    private AnuncioService anuncioService;
 
     @Autowired
-    private StatusRepository statusRepository;
+    private StatusService statusService;
 
     @PostMapping("/criar")
     public ResponseEntity<Map<String,Object>> createProposta(@RequestBody PropostaDTO propostaDTO) {
         Proposta proposta = new Proposta();
         Map<String,Object> response = new HashMap<>();
-        Optional<User> requisitante = userRepository.findById(propostaDTO.idRequisitante());
-        Optional<Anuncio> anuncio = anuncioRepository.findById(propostaDTO.idAnuncio());
-        Optional<Status> status = statusRepository.findById(1L);
+        Optional<User> requisitante = userService.verUsuario(propostaDTO.idRequisitante());
+        Optional<Anuncio> anuncio = anuncioService.verAnuncio(propostaDTO.idAnuncio());
+        Optional<Status> status = statusService.obterStatus(1L);
         if (!requisitante.isPresent()){
             response.put("message","Requisitante não existe no banco de usuários");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -63,5 +61,9 @@ public class PropostaController {
         }
     }
 
+    @GetMapping("/lista/createdBy/{userId}")
+    public List<Proposta> listarPropostaByUser(@RequestBody Long userId) {
+        return propostaService.listarPropostasByUserId(userId);
+    }
 
 }

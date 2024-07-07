@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/anuncios")
@@ -82,6 +86,12 @@ public class AnuncioController {
         response.put("Lista",anuncioService.listarAnuncios());
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @GetMapping("/listar/categoria/{idCategoria}")
+    public List<Anuncio> getMethodName(@RequestParam Long idCategoria) {
+        return anuncioService.listarAnuncioByCategoryId(idCategoria);
+    }
+    
 
     @GetMapping("/listarAnuncios/{userId}")
     public ResponseEntity<Map<String,Object>> getAnunciosByUserId(@PathVariable Long userId) {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PropostaService {
@@ -27,12 +28,7 @@ public class PropostaService {
     public List<Proposta> listarPropostasByUserId(Long userId) {
         List<Proposta> todas = listarPropostas();
         List<Proposta> resultado = new ArrayList<>();
-
-        for (Proposta proposta: todas){
-            if (proposta.getAnuncio().getCriador().getId() == userId) {
-                resultado.add(proposta);
-            }
-        }
+        for (Proposta proposta: todas) if (Objects.equals(proposta.getAnuncio().getCriador().getId(), userId)) resultado.add(proposta);
         return resultado;
     }
 

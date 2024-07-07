@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie'; // Importe Cookies de js-cookie
@@ -8,11 +8,10 @@ const CreateExchange = () => {
     titulo: '',
     categoria: '',
     departamento: '',
-    criador: '',
-    descricao: '', // Corrigi a chave 'descricao'
+    descricao: '',
   });
+  const [foto, setFoto] = useState(null); // Estado para armazenar o arquivo de foto
   const [categorias, setCategorias] = useState([]);
-  //const router = useRouter();
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -40,6 +39,11 @@ const CreateExchange = () => {
     });
   };
 
+  const handleFotoChange = (e) => {
+    const file = e.target.files[0];
+    setFoto(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,25 +51,28 @@ const CreateExchange = () => {
       // Obter userId do cookie usando js-cookie
       const userId = Cookies.get('userId'); // Substitua 'userId' pelo nome real do cookie
 
-      // Incluir userId e departamento em formData
-      const formDataWithUser = {
-        ...formData,
-        criador: userId,
-        departamento: formData.departamento // Certifique-se de que 'departamento' está sendo definido corretamente
-      };
+      // Construir um FormData para enviar dados e arquivo de foto
+      const formDataWithUser = new FormData();
+      formDataWithUser.append('titulo', formData.titulo);
+      formDataWithUser.append('categoria', formData.categoria);
+      formDataWithUser.append('departamento', formData.departamento);
+      formDataWithUser.append('descricao', formData.descricao);
+      formDataWithUser.append('criador', userId); // Incluir userId no formulário
 
-      const response = await fetch('http://127.0.0.1:8080/api/exchanges', {
+      // Adicionar a foto se estiver selecionada
+      if (foto) {
+        formDataWithUser.append('foto', foto);
+      }
+
+      const response = await fetch('http://127.0.0.1:8080/api/anuncios/criarAnuncio', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formDataWithUser),
+        body: formDataWithUser,
       });
 
       if (response.ok) {
         alert('Cadastro enviado com sucesso!');
         setFormData({ titulo: '', departamento: '', descricao: '' });
-      //router.push('/home'); // ou outro caminho que você deseja redirecionar após o sucesso
+        //router.push('/home'); // ou outro caminho que você deseja redirecionar após o sucesso
       } else {
         console.error('Erro ao enviar cadastro:', response.statusText);
       }
@@ -82,8 +89,18 @@ const CreateExchange = () => {
           <div className="flex flex-col items-center w-1/2">
             {/* Quadrado de inserir imagem */}
             <div className="flex flex-col items-center border-2 border-dashed border-[#F26329] rounded-md bg-white w-96 p-2 mb-4">
-              <img src="/icons/adicionar-imagem.svg" alt="Imagem de exemplo" className="object-cover w-full h-full" />
-              <span className="text-[#F26329] mt-4 block">Inserir imagem</span>
+              <input 
+                type="file" 
+                id="foto" 
+                name="foto" 
+                accept="image/*" 
+                onChange={handleFotoChange}
+                className="hidden" // Esconder o input de arquivo padrão
+              />
+              <label htmlFor="foto" className="cursor-pointer">
+                <img src="/icons/adicionar-imagem.svg" alt="Imagem de exemplo" className="object-cover w-full h-full" />
+                <span className="text-[#F26329] mt-4 block">Inserir imagem</span>
+              </label>
             </div>
 
             {/* Formulário para contato */}
@@ -105,7 +122,7 @@ const CreateExchange = () => {
               <select 
                 id="categoria" 
                 name="categoria" 
-                value={formData.categoria} // Corrigi para 'categoria'
+                value={formData.categoria} 
                 onChange={handleChange}
                 className="border-2 border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:border-[#F26329]"
               >

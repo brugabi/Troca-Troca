@@ -1,13 +1,19 @@
 package com.uneb.spring_api.models;
 
-import jakarta.persistence.*;
+import java.io.Serializable;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
-
-import java.io.Serializable;
 
 @Entity
 public class Anuncio extends RepresentationModel<Anuncio> implements Serializable {

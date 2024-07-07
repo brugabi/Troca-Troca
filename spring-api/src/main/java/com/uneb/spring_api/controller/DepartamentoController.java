@@ -3,8 +3,6 @@ package com.uneb.spring_api.controller;
 import com.uneb.spring_api.dto.DepartamentoDTO;
 import com.uneb.spring_api.models.Departamento;
 import com.uneb.spring_api.service.DepartamentoService;
-import lombok.Getter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

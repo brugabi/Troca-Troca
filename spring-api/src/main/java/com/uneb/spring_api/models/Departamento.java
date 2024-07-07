@@ -15,6 +15,8 @@ public class Departamento {
     private Long id;
 
     @NotNull
+    @Getter
+    @Setter
     private String nome;
 
     @Getter

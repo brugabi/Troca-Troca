@@ -7,6 +7,7 @@ import com.uneb.spring_api.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,13 @@ public class AnuncioService {
 
     public Optional<Anuncio> verAnuncio(Long id) {
         return anuncioRepository.findById(id);
+    }
+
+    public List<Anuncio> listarAnuncioByCateogoryId(Long id) {
+        List<Anuncio> todos = anuncioRepository.findAll();
+        List<Anuncio> resposta = new ArrayList<>();
+        for (Anuncio anuncio:todos) if(anuncio.getDepartamento().getId().equals(id)) resposta.add(anuncio);
+        return resposta;
     }
 
     public List<Anuncio> getAnunciosByUser(User criador) {

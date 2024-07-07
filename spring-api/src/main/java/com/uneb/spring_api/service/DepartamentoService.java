@@ -18,8 +18,8 @@ public class DepartamentoService {
         return departamentoRepository.save(departamento);
     }
 
-    public List<Departamento> listarDepartamentos() {
-        return departamentoRepository.findAll();
+    public List<Object[]> listarDepartamentos() {
+        return departamentoRepository.findIdAndNome();
     }
 
     public Optional<Departamento> verDepartamento(Long id) {

@@ -35,8 +35,8 @@ public class DepartamentoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Departamento>> listarDepartamentos() {
-        List<Departamento> listaDeDepartamento = departamentoService.listarDepartamentos();
+    public ResponseEntity<List<Object[]>> listarDepartamentos() {
+        List<Object[]> listaDeDepartamento = departamentoService.listarDepartamentos();
         return new ResponseEntity<>(listaDeDepartamento,HttpStatus.OK);
 
     }

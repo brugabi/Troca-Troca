@@ -58,6 +58,11 @@ public class User{
     @JsonIgnore
     private List<Anuncio> anuncios;
 
+    @Getter
+    @OneToMany(mappedBy = "requisitante")
+    @JsonIgnore
+    private List<Proposta> propostas;
+
     public @Size(min = 2, message = "O primeiro nome deve ter no minimo 2 caracteres.") @NotBlank(message = "O primeiro do nome deve ser informado.") String getPrimeiroNome() {
         return primeiroNome;
     }

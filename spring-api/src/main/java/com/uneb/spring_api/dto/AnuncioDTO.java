@@ -1,5 +1,7 @@
 package com.uneb.spring_api.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.repositories.UserRepository;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +22,10 @@ public record AnuncioDTO(
         Long idCriador,
 
         @NotNull(message = "O ID do departamneto deve ser informado")
-        Long idDepartamento
+        Long idDepartamento,
+
+        @NotNull(message = "A foto deve ser informada.")
+        MultipartFile foto
 
 ) {
         @Override

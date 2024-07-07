@@ -6,6 +6,7 @@ import com.uneb.spring_api.models.Departamento;
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AnuncioService;
 import com.uneb.spring_api.service.DepartamentoService;
+import com.uneb.spring_api.service.FotoService;
 import com.uneb.spring_api.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AnuncioController {
 
     @Autowired
     private DepartamentoService departamentoService;
+    
+    @Autowired
+    private FotoService fotoService;
 
     @PostMapping("/criarAnuncio")
     public ResponseEntity<Map<String, Object>> createAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO) {
@@ -38,11 +42,16 @@ public class AnuncioController {
         response.put("datetime",LocalDateTime.now());
         Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador());
         Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento());
-        if (criador.isPresent() & departamento.isPresent()) {
+        if (criador.isPresent() && departamento.isPresent()) {
             anuncio.setTitulo(anuncioDTO.titulo());
             anuncio.setDescricao(anuncioDTO.descricao());
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
+
+            // Salvar a foto
+            String fotoUrl = fotoService.saveFile(anuncioDTO.foto());
+            anuncio.setFotoUrl(fotoUrl);
+
             anuncioService.criarAnuncio(anuncio);
             response.put("anuncio",anuncio);
             return new ResponseEntity<>(response,HttpStatus.OK);

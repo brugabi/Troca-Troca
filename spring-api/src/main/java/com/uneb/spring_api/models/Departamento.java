@@ -1,5 +1,6 @@
 package com.uneb.spring_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,5 +23,6 @@ public class Departamento {
     @Getter
     @Setter
     @OneToMany(mappedBy = "departamento")
+    @JsonIgnore
     private List<Anuncio> anuncios;
 }

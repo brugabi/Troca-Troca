@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +55,7 @@ public class User{
     @Setter
     @Getter
     @OneToMany(mappedBy = "criador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Anuncio> anuncios;
 
     public @Size(min = 2, message = "O primeiro nome deve ter no minimo 2 caracteres.") @NotBlank(message = "O primeiro do nome deve ser informado.") String getPrimeiroNome() {

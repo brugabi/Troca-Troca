@@ -5,9 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
+
+import java.io.Serializable;
 
 @Entity
-public class Anuncio {
+public class Anuncio extends RepresentationModel<Anuncio> implements Serializable {
     @Setter
     @Getter
     @Id

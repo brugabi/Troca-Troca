@@ -13,8 +13,4 @@ public class DepartamentoController {
 
     @Autowired
     private DepartamentoService departamentoService;
-
-    @PostMapping("/criar")
-    public ResponseEntity<String,Object> criarDepartamento()
-
 }

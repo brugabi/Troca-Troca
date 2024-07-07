@@ -11,8 +11,7 @@ const SimpleNavbar = () => {
             <div className="flex w-[50%] justify-end">
                 <nav className="flex gap-4">
                     <Link href="/home" className="highlighted-links hover:underline">Home</Link>
-                    <Link href="/proposals" className="highlighted-links hover:underline">Propostas</Link>
-                    <Link href="/about" className="highlighted-links hover:underline">Sobre nós</Link>
+                    <Link href="http://localhost:3000/home/proposals" className="highlighted-links hover:underline">Propostas</Link>
                 </nav>
             </div>
         </div>

@@ -2,16 +2,12 @@ package com.uneb.spring_api.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -54,6 +50,11 @@ public class User{
     
     @NotNull
     private LocalDateTime dataDeCadastro;
+
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "criador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anuncio> anuncios;
 
     public @Size(min = 2, message = "O primeiro nome deve ter no minimo 2 caracteres.") @NotBlank(message = "O primeiro do nome deve ser informado.") String getPrimeiroNome() {
         return primeiroNome;
@@ -110,4 +111,5 @@ public class User{
     public void setDataDeCadastro(@NotNull LocalDateTime dataDeCadastro) {
         this.dataDeCadastro = dataDeCadastro;
     }
+
 }

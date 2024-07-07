@@ -76,8 +76,9 @@ public class PropostaController {
         propostaService.atualizarProposta(propostaAAceitar.get());
 
         // Alterar status do anuncio
-
-
+        Anuncio anuncio = propostaAAceitar.get().getAnuncio();
+        anuncio.setStatus(false);
+        anuncioService.atualizarStatusAnuncio(anuncio);
 
         Map<String,Object> response = new HashMap<>();
         response.put("message","Proposta aceita!");

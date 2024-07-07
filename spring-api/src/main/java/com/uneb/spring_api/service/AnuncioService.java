@@ -46,4 +46,10 @@ public class AnuncioService {
         anuncioRepository.deleteById(id);
         return null;
     }
+
+    
+    public void atualizarStatusAnuncio(Anuncio anuncio) {
+        // Apenas atualiza o status do anúncio no banco de dados
+        anuncioRepository.save(anuncio);
+    }
 }

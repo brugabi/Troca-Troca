@@ -35,7 +35,7 @@ export default function Proposals() {
 
                         {categorias.map((categoria) => (
                             <div key={categoria.id} className="flex gap-1 ml-2">
-                                <button className="flex font-semibold hover:text-[#F26329]">{categoria.nome}</button>
+                                <button className="flex text-left font-semibold hover:text-[#F26329]">{categoria.nome}</button>
                             </div>
                         ))}
                     </div>

@@ -15,12 +15,12 @@ public class Anuncio {
     private Long id;
 
     @NotBlank(message = "O titulo deve ser informado")
-    @Size(min = 2, max = 255,message = "O titilo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.")
+    @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.")
     private String titulo;
 
     @Column(columnDefinition = "TEXT")
     @NotBlank(message = "Todo anuncio deve ter uma descricao")
-    @Size(min = 2,message = "A descricao deve ter tamanho minimo de 2 caracteres.")
+    @Size(min = 2, message = "A descricao deve ter tamanho minimo de 2 caracteres.")
     private String descricao;
 
     @Setter
@@ -28,11 +28,11 @@ public class Anuncio {
     @ManyToOne
     private User criador;
 
-    public @NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titilo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String getTitulo() {
+    public @NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(@NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titilo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String titulo) {
+    public void setTitulo(@NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String titulo) {
         this.titulo = titulo;
     }
 
@@ -43,5 +43,4 @@ public class Anuncio {
     public void setDescricao(@NotBlank(message = "Todo anuncio deve ter uma descricao") @Size(min = 2, message = "A descricao deve ter tamanho minimo de 2 caracteres.") String descricao) {
         this.descricao = descricao;
     }
-
 }

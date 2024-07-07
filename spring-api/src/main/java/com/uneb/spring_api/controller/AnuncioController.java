@@ -61,4 +61,9 @@ public class AnuncioController {
         response.put("Lista",anuncioService.listarAnuncios());
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @GetMapping("/usuarios/{userId}/anuncios")
+    public List<Anuncio> getAnunciosByUserId(@PathVariable Long userId) {
+        return anuncioService.getAnunciosByUserId(userId);
+    }
 }

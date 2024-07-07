@@ -1,5 +1,6 @@
 package com.uneb.spring_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Anuncio extends RepresentationModel<Anuncio> implements Serializable {
@@ -39,6 +41,11 @@ public class Anuncio extends RepresentationModel<Anuncio> implements Serializabl
     @Setter
     @Getter
     private String fotoUrl;
+
+    @Getter
+    @OneToMany(mappedBy = "anuncio")
+    @JsonIgnore
+    private List<Proposta> propostas;
 
     public @NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String getTitulo() {
         return titulo;

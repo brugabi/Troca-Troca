@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -51,6 +49,7 @@ public class AnuncioController {
             anuncio.setDescricao(anuncioDTO.descricao());
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
+            anuncio.setStatus(true);
 
             // Salvar a foto
             String fotoUrl = fotoService.saveFile(anuncioDTO.foto());
@@ -121,4 +120,26 @@ public class AnuncioController {
             return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
         }
     }
+
+    @PatchMapping("/alterarStatus/{id}")
+    public ResponseEntity<Map<String, Object>> alterarStatusAnuncio(@PathVariable Long id) {
+    Optional<Anuncio> optionalAnuncio = anuncioService.verAnuncio(id);
+    Map<String,Object> response = new HashMap<>();
+    response.put("timestamp", LocalDateTime.now());
+
+    if (optionalAnuncio.isPresent()) {
+        Anuncio anuncio = optionalAnuncio.get();
+        anuncio.setStatus(false); // Altera o status para false
+
+        anuncioService.atualizarStatusAnuncio(anuncio); // Atualiza apenas o status no banco de dados
+
+        response.put("message", "Status do anúncio alterado para false.");
+        response.put("anuncio", anuncio);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    } else {
+        response.put("error", "Anúncio não encontrado. Não foi possível alterar o status.");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+}
+ 
 }

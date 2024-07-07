@@ -47,6 +47,10 @@ public class Anuncio extends RepresentationModel<Anuncio> implements Serializabl
     @JsonIgnore
     private List<Proposta> propostas;
 
+    @Getter
+    @Setter
+    private boolean status;
+
     public @NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String getTitulo() {
         return titulo;
     }

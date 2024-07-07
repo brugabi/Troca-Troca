@@ -1,8 +1,30 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Navbar from '@components/navbar';
 import PostCards from '@components/postcards';
 
 export default function Proposals() {
+    const [categorias, setCategorias] = useState([]);
+
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/departamentos/listar');
+                if (response.ok) {
+                    const data = await response.json();
+                    setCategorias(data);
+                } else {
+                    console.error('Erro ao buscar categorias:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar categorias:', error);
+            }
+        };
+
+        fetchCategorias();
+    }, []); // Executa apenas uma vez ao montar o componente
+
     return (
         <div className="flex flex-col min-h-screen bg-slate-100">
             <Navbar />
@@ -11,26 +33,11 @@ export default function Proposals() {
                     <div className="flex flex-col gap-2 h-[90%]">
                         <span className="font-bold">Categorias</span>
 
-                        <div className="flex gap-1 ml-2">
-                            <div className="bg-slate-400 rounded-full p-1 hover:bg-[#F26329]">
-                                <Image src={"/icons/book_black.svg"} width={25} height={25} alt="Livros" />
+                        {categorias.map((categoria) => (
+                            <div key={categoria.id} className="flex gap-1 ml-2">
+                                <span className="flex items-center font-semibold">{categoria.nome}</span>
                             </div>
-                            <span className="flex items-center">Livros</span>
-                        </div>
-
-                        <div className="flex gap-1 ml-2">
-                            <div className="bg-slate-400 rounded-full p-1 hover:bg-[#F26329]">
-                                <Image src={"/icons/game_black.svg"} width={25} height={25} alt="Jogos" />
-                            </div>
-                            <span className="flex items-center">Jogos</span>
-                        </div>
-
-                        <div className="flex gap-1 ml-2">
-                            <div className="bg-slate-400 rounded-full p-1 hover:bg-[#F26329]">
-                                <Image src={"/icons/game_black.svg"} width={25} height={25} alt="Acessórios" />
-                            </div>
-                            <span className="flex items-center">Acessórios</span>
-                        </div>
+                        ))}
                     </div>
                 </div>
 

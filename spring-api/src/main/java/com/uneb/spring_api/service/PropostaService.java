@@ -1,5 +1,6 @@
 package com.uneb.spring_api.service;
 
+import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Proposta;
 import com.uneb.spring_api.repositories.PropostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PropostaService {
@@ -30,6 +32,14 @@ public class PropostaService {
         List<Proposta> resultado = new ArrayList<>();
         for (Proposta proposta: todas) if (Objects.equals(proposta.getAnuncio().getCriador().getId(), userId)) resultado.add(proposta);
         return resultado;
+    }
+
+    public Optional<Proposta> obterProposta(Long id) {
+        return propostaRepository.findById(id);
+    }
+
+    public Proposta atualizarProposta(Proposta propostaAtualizada) {
+        return propostaRepository.save(propostaAtualizada);
     }
 
 }

@@ -66,4 +66,37 @@ public class PropostaController {
         return propostaService.listarPropostasByUserId(userId);
     }
 
+    @PostMapping("/aceitar/{id}")
+    public ResponseEntity<Map<String,Object>> aceitarProposta(@RequestBody Long id){
+
+        // Alterando a proposta na tabela
+        Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);
+        Optional<Status> statusDeAceito = statusService.obterStatus(2L);
+        propostaAAceitar.get().setStatus(statusDeAceito.get());
+        propostaService.atualizarProposta(propostaAAceitar.get());
+
+        // Alterar status do anuncio
+
+
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("message","Proposta aceita!");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PostMapping("/recusar/{id}")
+    public ResponseEntity<Map<String,Object>> recusarProposta(@RequestBody Long id){
+
+        // Alterando a proposta na tabela
+        Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);
+        Optional<Status> statusDeAceito = statusService.obterStatus(3L);
+        propostaAAceitar.get().setStatus(statusDeAceito.get());
+        propostaService.atualizarProposta(propostaAAceitar.get());
+
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("message","Proposta recusada!");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 }

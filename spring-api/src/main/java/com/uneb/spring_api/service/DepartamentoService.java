@@ -5,8 +5,8 @@ import com.uneb.spring_api.repositories.DepartamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartamentoService {
@@ -18,8 +18,16 @@ public class DepartamentoService {
         return departamentoRepository.save(departamento);
     }
 
-    public List<Object[]> listarDepartamentos() {
-        return departamentoRepository.findIdAndNome();
+    public List<Map<String, Object>> listarDepartamentos() {
+        List<Object[]> results = departamentoRepository.findIdAndNome();
+        List<Map<String, Object>> finalResult = new ArrayList<>();
+        for (Object[] lista:results){
+            Map<String,Object> dicionario = new HashMap<>();
+            dicionario.put("id",lista[0]);
+            dicionario.put("nome",lista[1]);
+            finalResult.add(dicionario);
+        }
+        return finalResult;
     }
 
     public Optional<Departamento> verDepartamento(Long id) {

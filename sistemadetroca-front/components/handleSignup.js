@@ -5,7 +5,7 @@ import Image from 'next/image';
 const signUp = () => {
 
     const [primeiroNome, setFirstUsername] = useState('');
-    const [ultimoNome, setLastUsername] = useState('');
+    const [sobrenome, setLastUsername] = useState('');
     const [login, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setPassword] = useState('');
@@ -13,17 +13,17 @@ const signUp = () => {
 
     const handleSignup = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8080/api/user', {
+            const response = await fetch('http://127.0.0.1:8080/api/usuarios/criar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ primeiroNome, ultimoNome, login, email, senha, dataDeNascimento }),
+                body: JSON.stringify({ primeiroNome, sobrenome, login, email, senha, dataDeNascimento }),
             });
 
             if (response.ok) {
                 // Lógica para sucesso na criação de conta
-                console.log('Conta criada com sucesso!');
+                alert('Conta criada com sucesso!');
             } else {
                 // Lógica para tratamento de erro
                 console.error('Falha ao criar conta:', response.statusText);
@@ -52,7 +52,7 @@ const signUp = () => {
                 <div className="flex w-[50%] p-3 bg-slate-100 gap-1">
                 <Image src={"/icons/user_info.svg"} width={25} height={25} alt="userIcon" />
                     <input
-                        value={ultimoNome}
+                        value={sobrenome}
                         onChange={(e) => setLastUsername(e.target.value)}
                         className="w-[90%] bg-slate-100 focus:outline-none"
                         placeholder="Sobrenome"

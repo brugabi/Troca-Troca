@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from 'react';
-// import Image from 'next/image';
 import Link from 'next/link';
 
 const PostCards = () => {
@@ -30,6 +29,10 @@ const PostCards = () => {
         return () => window.removeEventListener('resize', updateHeight);
     }, []);
 
+    const handleViewMoreClick = (id) => {
+        localStorage.setItem('selectedPostId', id);
+    };
+
     return (
         <div className="flex flex-col w-full p-4" style={{ height: `calc(${screenHeight}px - 64px)`, overflowY: 'scroll' }}>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -42,7 +45,7 @@ const PostCards = () => {
                             <h2 className="text-lg font-bold">{post.titulo}</h2>
                             <p className="text-gray-600">{post.descricao}</p>
                             <div className="flex flex-row justify-between items-center mt-2">
-                                <Link href="#" className="text-blue-600 hover:underline">Ver detalhes</Link>
+                                <Link href="/home/viewmore" className="text-blue-600 hover:underline" onClick={() => handleViewMoreClick(post.id)}>Ver detalhes</Link>
                                 <div>
                                     <p className="text-gray-600">{post.departamento.nome}</p>
                                 </div>

@@ -28,22 +28,9 @@ export default function Proposals() {
     return (
         <div className="flex flex-col min-h-screen bg-slate-100">
             <Navbar />
-            <div className="flex flex-row flex-1 overflow-hidden">
-                <div className="flex flex-col w-auto bg-white shadow-lg gap-5 p-2">
-                    <div className="flex flex-col gap-2 h-[90%]">
-                        <span className="font-bold">Categorias</span>
 
-                        {categorias.map((categoria) => (
-                            <div key={categoria.id} className="flex gap-1 ml-2">
-                                <button className="flex text-left font-semibold hover:text-[#F26329]">{categoria.nome}</button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="flex flex-col w-[90%] overflow-y-auto">
-                    <PostCards />
-                </div>
+            <div className="flex flex-col w-[100%] overflow-y-auto">
+                <PostCards />
             </div>
         </div>
     );

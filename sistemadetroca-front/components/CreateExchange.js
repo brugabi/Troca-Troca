@@ -54,6 +54,7 @@ const CreateExchange = () => {
         console.log(data)
       })
 
+      alert('Criado com sucesso!')
       console.log(dataToSend)
 
     } catch (error) {

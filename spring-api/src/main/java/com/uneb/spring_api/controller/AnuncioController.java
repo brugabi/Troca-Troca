@@ -47,7 +47,7 @@ public class AnuncioController {
     
 
 
-    @PostMapping("/criarAnuncio")
+    @PostMapping("/criarAnuncio") // Rota usada para criar
     public ResponseEntity<Map<String, Object>> createAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO) {
         Anuncio anuncio = new Anuncio();
         Map<String,Object> response = new HashMap<>();

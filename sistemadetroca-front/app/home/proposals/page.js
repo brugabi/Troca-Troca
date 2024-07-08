@@ -13,15 +13,15 @@ export default function Proposals() {
             fetch(`http://127.0.0.1:8080/api/proposta/lista/createdBy/${userId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Dados recebidos da API:', data); // Console.log para debug
+                    console.log('Dados recebidos da API:', data);
 
-                    // Mapeando os dados recebidos para os campos desejados
                     const mappedProposals = data.map(item => ({
                         id: item.id,
                         title: item.anuncio.titulo,
                         description: item.anuncio.descricao,
                         username: item.requisitante.primeiroNome + ' ' + item.requisitante.sobrenome,
                         status: item.status.nome,
+                        statusId: item.status.id,
                         date: item.dataDeProposta
                     }));
 
@@ -38,8 +38,7 @@ export default function Proposals() {
         .then(response => response.json())
         .then(data => {
             console.log('Proposta aceita:', data);
-            // Atualizar localmente, se necessário
-            window.location.reload(); // Recarrega a página após ação concluída
+            window.location.reload();
         })
         .catch(error => console.error('Erro ao aceitar proposta:', error));
     };
@@ -51,8 +50,7 @@ export default function Proposals() {
         .then(response => response.json())
         .then(data => {
             console.log('Proposta recusada:', data);
-            // Atualizar localmente, se necessário
-            window.location.reload(); // Recarrega a página após ação concluída
+            window.location.reload();
         })
         .catch(error => console.error('Erro ao recusar proposta:', error));
     };
@@ -84,12 +82,14 @@ export default function Proposals() {
                         <div className="flex justify-end space-x-4">
                             <button
                                 onClick={() => handleRejectProposal(proposal.id)}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600">
+                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
+                                disabled={proposal.statusId !== 1}>
                                 Recusar
                             </button>
                             <button
                                 onClick={() => handleAcceptProposal(proposal.id)}
-                                className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600">
+                                className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600"
+                                disabled={proposal.statusId !== 1}>
                                 Aceitar
                             </button>
                         </div>
@@ -99,4 +99,3 @@ export default function Proposals() {
         </div>
     );
 }
-

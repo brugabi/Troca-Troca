@@ -13,14 +13,14 @@ import java.util.List;
 @Data
 public class Departamento {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id //identificacao para id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //autoincremento
+    private Long id; //id do departamento
 
     @NotNull
-    private String nome;
+    private String nome; //nome do departamento
 
-    @OneToMany(mappedBy = "departamento")
-    @JsonIgnore
-    private List<Anuncio> anuncios;
+    @OneToMany(mappedBy = "departamento") //relacionamento muitos para um
+    @JsonIgnore //evitar serializacao, estava crashando o codigo
+    private List<Anuncio> anuncios; //lista de anuncio que possui esse departamento
 }

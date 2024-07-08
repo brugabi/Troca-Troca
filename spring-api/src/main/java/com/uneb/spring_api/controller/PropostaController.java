@@ -70,7 +70,7 @@ public class PropostaController {
     }
 
     @PostMapping("/aceitar/{id}")
-    public ResponseEntity<Map<String,Object>> aceitarProposta(@RequestBody Long id){
+    public ResponseEntity<Map<String,Object>> aceitarProposta(@PathVariable Long id){
 
         // Alterando a proposta na tabela
         Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);
@@ -89,7 +89,7 @@ public class PropostaController {
     }
 
     @PostMapping("/recusar/{id}")
-    public ResponseEntity<Map<String,Object>> recusarProposta(@RequestBody Long id){
+    public ResponseEntity<Map<String,Object>> recusarProposta(@PathVariable Long id){
 
         // Alterando a proposta na tabela
         Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);

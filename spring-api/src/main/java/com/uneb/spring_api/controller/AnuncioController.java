@@ -3,16 +3,20 @@ package com.uneb.spring_api.controller;
 import com.uneb.spring_api.dto.AnuncioDTO;
 import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Departamento;
+
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AnuncioService;
 import com.uneb.spring_api.service.DepartamentoService;
-import com.uneb.spring_api.service.FotoService;
+import com.uneb.spring_api.service.FileStorageService;
+
 import com.uneb.spring_api.service.UserService;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -34,8 +38,7 @@ public class AnuncioController {
     @Autowired
     private DepartamentoService departamentoService;
     
-    @Autowired
-    private FotoService fotoService;
+
 
     @PostMapping("/criarAnuncio")
     public ResponseEntity<Map<String, Object>> createAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO) {
@@ -50,10 +53,6 @@ public class AnuncioController {
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
             anuncio.setStatus(true);
-
-            // Salvar a foto
-            String fotoUrl = fotoService.saveFile(anuncioDTO.foto());
-            anuncio.setFotoUrl(fotoUrl);
 
             anuncioService.criarAnuncio(anuncio);
             response.put("anuncio",anuncio);

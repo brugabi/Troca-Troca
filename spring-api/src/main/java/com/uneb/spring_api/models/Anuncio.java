@@ -38,10 +38,6 @@ public class Anuncio extends RepresentationModel<Anuncio> implements Serializabl
     @ManyToOne
     private Departamento departamento;
 
-    @Setter
-    @Getter
-    private String fotoUrl;
-
     @Getter
     @OneToMany(mappedBy = "anuncio")
     @JsonIgnore

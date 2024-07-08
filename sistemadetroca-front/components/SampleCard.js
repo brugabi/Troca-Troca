@@ -13,7 +13,10 @@ const SampleCard = () => {
 
     return (
         <div className="bg-white shadow-md rounded-md overflow-hidden mb-4 w-96">
-            <Image src={post.image} width={400} height={200} className="w-full h-auto" alt={post.title} />
+            <div>
+                <Image src={post.image} width={400} height={200} className="w-full h-auto" alt={post.title} />
+            </div>
+            
             <div className="p-4">
                 <h2 className="text-lg font-bold">{post.title}</h2>
                 <p className="text-gray-600">{post.description}</p>

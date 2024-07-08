@@ -1,17 +1,24 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 const PostCards = () => {
     const [screenHeight, setScreenHeight] = useState(0);
     const [posts, setPosts] = useState([]);
+    const userId = Cookies.get('UserId');
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const response = await fetch('http://127.0.0.1:8080/api/anuncios/listarAnuncios');
                 const data = await response.json();
-                setPosts(data.Lista);
+                console.log('UserId:', userId); 
+                console.log('Data:', data.Lista); 
+                
+                const filteredPosts = data.Lista.filter(post => String(post.criador.id) !== String(userId));
+                setPosts(filteredPosts);
+                console.log('Filtered Posts:', filteredPosts);
             } catch (error) {
                 console.error('Erro ao buscar os posts:', error);
             }
@@ -27,7 +34,7 @@ const PostCards = () => {
         window.addEventListener('resize', updateHeight);
 
         return () => window.removeEventListener('resize', updateHeight);
-    }, []);
+    }, [userId]);
 
     const handleViewMoreClick = (id) => {
         localStorage.setItem('selectedPostId', id);
@@ -40,7 +47,7 @@ const PostCards = () => {
                     <div key={post.id} className="bg-white shadow-md rounded-md overflow-hidden">
                         <div className="p-4 items-start">
                             <div className="flex justify-start">
-                                <span className=" text-gray-600">{post.criador.login}</span>
+                                <span className="text-gray-600">{post.criador.login}</span>
                             </div>
                             <h2 className="text-lg font-bold">{post.titulo}</h2>
                             <p className="text-gray-600">{post.descricao}</p>
@@ -50,7 +57,6 @@ const PostCards = () => {
                                     <p className="text-gray-600">{post.departamento.nome}</p>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 ))}

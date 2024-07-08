@@ -19,10 +19,7 @@ public record AnuncioDTO(
         Long idCriador,
 
         @NotNull(message = "O ID do departamneto deve ser informado")
-        Long idDepartamento,
-
-        @NotNull(message = "o ID da img deve ser informado")
-        Long idImagem
+        Long idDepartamento
 
 ) {
         @Override
@@ -44,8 +41,5 @@ public record AnuncioDTO(
         public @NotNull(message = "O ID do departamneto deve ser informado") Long idDepartamento() {
                 return idDepartamento;
         }
-        @Override
-        public @NotNull(message = "O ID da img deve ser informado") Long idImagem(){
-                return idImagem;
-        }
+
 }

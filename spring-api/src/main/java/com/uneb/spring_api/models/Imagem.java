@@ -17,6 +17,6 @@ public class Imagem {
 
     private String url;
 
-    @OneToOne(mappedBy = "imagem")
-    private Anuncio anuncio;
+    // @OneToOne(mappedBy = "imagem")
+    // private Anuncio anuncio;
 }

@@ -2,12 +2,10 @@ package com.uneb.spring_api.service;
 
 import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.repositories.AnuncioRepository;
-import com.uneb.spring_api.repositories.ImagemRepository;
 import com.uneb.spring_api.repositories.UserRepository;
 import com.uneb.spring_api.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +20,7 @@ public class AnuncioService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ImagemRepository imagemRepository;
-    @Transactional
     public Anuncio criarAnuncio(Anuncio anuncio) {
-            // Verifica se a imagem está definida no anúncio
-            if (anuncio.getImagem() != null) {
-                    // Persiste a imagem, se não estiver persistida
-                if (anuncio.getImagem().getId() == null) {
-                    anuncio.setImagem(imagemRepository.save(anuncio.getImagem()));
-                    }
-                }
         return anuncioRepository.save(anuncio);
     }
 

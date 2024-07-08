@@ -22,7 +22,7 @@ public class Imagem {
 
     private String url;
 
-    @OneToMany(mappedBy = "imagem") //relacionamento muitos para um
-    @JsonIgnore //evitar serializacao, estava crashando o codigo
-    private List<Anuncio> anuncios; //lista de anuncio que possui esse departamento
+    // @OneToMany(mappedBy = "imagem") //relacionamento muitos para um
+    // @JsonIgnore //evitar serializacao, estava crashando o codigo
+    // private List<Anuncio> anuncios; 
 }

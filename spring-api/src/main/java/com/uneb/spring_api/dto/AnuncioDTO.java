@@ -19,10 +19,10 @@ public record AnuncioDTO(
         Long idCriador,
 
         @NotNull(message = "O ID do departamneto deve ser informado")
-        Long idDepartamento,
+        Long idDepartamento
 
-        @NotNull (message = "O ID da imagem deve ser informado")
-        Long idImagem
+        // @NotNull (message = "O ID da imagem deve ser informado")
+        // Long idImagem
 ) {
         @Override
         public @NotBlank(message = "O título deve ser informado.") @Size(min = 2, max = 255, message = "O título deve ter entre 2 e 255 caracteres.") String titulo() {
@@ -43,9 +43,9 @@ public record AnuncioDTO(
         public @NotNull(message = "O ID do departamneto deve ser informado") Long idDepartamento() {
                 return idDepartamento;
         }
-        @Override
-        public @NotNull(message = "O ID da img deve ser informado") Long idImagem() {
-                return idImagem;
-        }
+        // @Override
+        // public @NotNull(message = "O ID da img deve ser informado") Long idImagem() {
+        //         return idImagem;
+        // }
 
 }

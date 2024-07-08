@@ -3,7 +3,7 @@ package com.uneb.spring_api.controller;
 import com.uneb.spring_api.dto.AnuncioDTO;
 import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Departamento;
-
+import com.uneb.spring_api.models.Imagem;
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AnuncioService;
 import com.uneb.spring_api.service.DepartamentoService;
@@ -13,10 +13,11 @@ import com.uneb.spring_api.service.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class AnuncioController {
 
     @Autowired
     private DepartamentoService departamentoService;
+
+    @Autowired FileStorageService fileStorageService;
     
 
 
@@ -47,13 +50,14 @@ public class AnuncioController {
         response.put("datetime",LocalDateTime.now());
         Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador());
         Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento());
+        Optional<Imagem> imagem = fileStorageService.obterImagem(anuncio.getImagem().getId());
         if (criador.isPresent() && departamento.isPresent()) {
             anuncio.setTitulo(anuncioDTO.titulo());
             anuncio.setDescricao(anuncioDTO.descricao());
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
             anuncio.setStatus(true);
-
+            
             anuncioService.criarAnuncio(anuncio);
             response.put("anuncio",anuncio);
             return new ResponseEntity<>(response,HttpStatus.OK);

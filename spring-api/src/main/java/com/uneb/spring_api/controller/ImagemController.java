@@ -31,7 +31,7 @@ public class ImagemController {
             Imagem imagem = new Imagem();
             imagem.setUrl(filePath);
             imagemRepository.save(imagem);
-            return ResponseEntity.ok("Foooi" + filePath);
+            return ResponseEntity.ok(filePath);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Tristeza");
         }

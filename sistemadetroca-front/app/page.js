@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Image from "next/image";
 import HendleSignup from "components/handleSignup"
 import { useRouter } from 'next/navigation';
+// import { cookies } from 'next/headers';
+import Cookies from 'js-cookie';
 
 export default function Login() {
 
@@ -20,20 +22,15 @@ export default function Login() {
         body: JSON.stringify({ login, senha }),
       });
   
-      // Verifica se a resposta foi bem-sucedida (status code 200-299)
       if (response.ok) {
-        // Extrai os dados JSON da resposta
         const data = await response.json();
-        // Captura o ID do usuário da resposta
         const userId = data;
+        Cookies.set("UserId", userId)
         alert(data)
         console.log('Login concluído! ID do usuário:', userId);
-        // Aqui você pode redirecionar o usuário ou realizar outras ações após o login
         router.push('/home');
       } else {
-        // Lógica para tratamento de erro
         console.error('Falha no usuário ou senha:', response.statusText);
-        // Ou você pode processar o JSON do erro, se houver, com await response.json() aqui
       }
     } catch (error) {
       console.error('Erro ao processar login:', error);
@@ -71,4 +68,3 @@ export default function Login() {
     </main>
   );
 }
-

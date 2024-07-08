@@ -1,29 +1,33 @@
 package com.uneb.spring_api.controller;
 
-import com.uneb.spring_api.dto.AnuncioDTO;
-import com.uneb.spring_api.models.Anuncio;
-import com.uneb.spring_api.models.Departamento;
-import com.uneb.spring_api.models.Imagem;
-import com.uneb.spring_api.models.User;
-import com.uneb.spring_api.service.AnuncioService;
-import com.uneb.spring_api.service.DepartamentoService;
-import com.uneb.spring_api.service.FileStorageService;
-
-import com.uneb.spring_api.service.UserService;
-import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.uneb.spring_api.dto.AnuncioDTO;
+import com.uneb.spring_api.models.Anuncio;
+import com.uneb.spring_api.models.Departamento;
+import com.uneb.spring_api.models.User;
+import com.uneb.spring_api.service.AnuncioService;
+import com.uneb.spring_api.service.DepartamentoService;
+import com.uneb.spring_api.service.FileStorageService;
+import com.uneb.spring_api.service.UserService;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -91,7 +95,8 @@ public class AnuncioController {
     }
 
     @GetMapping("/listar/categoria/{idCategoria}")
-    public List<Anuncio> getMethodName(@RequestParam Long idCategoria) {
+    public List<Anuncio> getMethodName(@PathVariable Long idCategoria) {
+        System.out.println(idCategoria);
         return anuncioService.listarAnuncioByCategoryId(idCategoria);
     }
     

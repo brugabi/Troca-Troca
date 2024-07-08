@@ -14,8 +14,7 @@ const navBar = () => {
             <div className="flex w-[33%] justify-end">
                 <nav className="flex gap-4">
                     <Link href="http://localhost:3000/home/newpost" className="highlighted-links hover:underline">Criar troca</Link>
-                    <Link href="#" className="highlighted-links hover:underline">Propostas</Link>
-                    <Link href="#" className="highlighted-links hover:underline">Sobre nós</Link>
+                    <Link href="http://localhost:3000/home/proposals" className="highlighted-links hover:underline">Propostas</Link>
                 </nav>
             </div>
         </div>

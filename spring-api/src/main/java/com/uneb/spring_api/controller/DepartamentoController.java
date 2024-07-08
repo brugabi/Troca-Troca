@@ -22,11 +22,11 @@ public class DepartamentoController {
 
     @PostMapping("/criar")
     public ResponseEntity<Map<String, Object>> criarDepartamento(@RequestBody DepartamentoDTO departamentoDTO) {
-        Departamento departamento = new Departamento();
-        Map<String, Object> response = new HashMap<>();
-        departamento.setNome(departamentoDTO.nome());
-        Departamento departamentoCriado = departamentoService.criarDepartamento(departamento);
-        response.put("timestamp", LocalDateTime.now());
+        Departamento departamento = new Departamento(); 
+        Map<String, Object> response = new HashMap<>(); //instanciando objeto para uma resposta estruturada
+        departamento.setNome(departamentoDTO.nome()); //define o nome do departamento
+        Departamento departamentoCriado = departamentoService.criarDepartamento(departamento); //cria o departamento
+        response.put("timestamp", LocalDateTime.now()); //salva o horario da criacao
         response.put("message","Departamento criado com sucesso!!");
         response.put("data",departamentoCriado);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -34,6 +34,6 @@ public class DepartamentoController {
 
     @GetMapping("/listar")
     public List<Map<String,Object>> listarDepartamentos() {
-        return departamentoService.listarDepartamentos();
+        return departamentoService.listarDepartamentos(); //listar todos os departamentos
     }
 }

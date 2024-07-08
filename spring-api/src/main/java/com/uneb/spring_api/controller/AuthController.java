@@ -16,6 +16,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public Long login(@RequestBody User user) {
-        return authService.authenticateAndGetUserId(user.getLogin(), user.getSenha());
+        return authService.authenticateAndGetUserId(user.getLogin(), user.getSenha()); //pega o usuario a senha do usuario
     }
 }

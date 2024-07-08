@@ -15,7 +15,7 @@ public class DepartamentoService {
     private DepartamentoRepository departamentoRepository;
 
     public Departamento criarDepartamento(Departamento departamento) {
-        return departamentoRepository.save(departamento);
+        return departamentoRepository.save(departamento); //salva o departamento no banco
     }
 
     public List<Map<String, Object>> listarDepartamentos() {

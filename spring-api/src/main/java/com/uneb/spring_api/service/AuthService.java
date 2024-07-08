@@ -12,10 +12,10 @@ public class AuthService {
     private UserRepository userRepository;
 
     public Long authenticateAndGetUserId(String login, String senha) {
-        User user = userRepository.findByLoginAndSenha(login, senha);
+        User user = userRepository.findByLoginAndSenha(login, senha); //procura pelo login e senha
         if (user != null) {
-            return user.getId();
+            return user.getId(); //retrona o id para conectividade com o front
         }
-        return null; 
+        return null; // se nao existir retorna null
     }
 }

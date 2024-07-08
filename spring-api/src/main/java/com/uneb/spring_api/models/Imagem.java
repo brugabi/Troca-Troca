@@ -1,10 +1,15 @@
 package com.uneb.spring_api.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -17,6 +22,7 @@ public class Imagem {
 
     private String url;
 
-    // @OneToOne(mappedBy = "imagem")
-    // private Anuncio anuncio;
+    @OneToMany(mappedBy = "imagem") //relacionamento muitos para um
+    @JsonIgnore //evitar serializacao, estava crashando o codigo
+    private List<Anuncio> anuncios; //lista de anuncio que possui esse departamento
 }

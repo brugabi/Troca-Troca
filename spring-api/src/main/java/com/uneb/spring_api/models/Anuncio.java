@@ -47,11 +47,10 @@ public class Anuncio extends RepresentationModel<Anuncio> implements Serializabl
     @Setter
     private boolean status;
 
-    // @Setter
-    // @Getter
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "imagem_id", referencedColumnName = "id")
-    // private Imagem imagem;
+    @Setter
+    @Getter
+    @ManyToOne
+    private Imagem imagem;
 
     public @NotBlank(message = "O titulo deve ser informado") @Size(min = 2, max = 255, message = "O titulo deve ter tamanho minimo de 2 e tamanho maximo de 255 caracteres.") String getTitulo() {
         return titulo;

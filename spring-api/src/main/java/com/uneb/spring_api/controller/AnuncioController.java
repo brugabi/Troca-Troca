@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uneb.spring_api.dto.AnuncioDTO;
 import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Departamento;
+import com.uneb.spring_api.models.Imagem;
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AnuncioService;
 import com.uneb.spring_api.service.DepartamentoService;
@@ -54,6 +55,7 @@ public class AnuncioController {
         response.put("datetime",LocalDateTime.now());
         Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador());
         Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento());
+        Optional<Imagem> imagem = fileStorageService.obterImagem(anuncioDTO.idImagem());
         
         if (criador.isPresent() && departamento.isPresent()) {
             anuncio.setTitulo(anuncioDTO.titulo());
@@ -61,6 +63,7 @@ public class AnuncioController {
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
             anuncio.setStatus(true);
+            anuncio.setImagem(imagem.get());
             
             
             anuncioService.criarAnuncio(anuncio);

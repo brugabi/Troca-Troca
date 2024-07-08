@@ -1,5 +1,6 @@
 package com.uneb.spring_api.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,6 @@ public class Imagem {
 
     private String url;
 
-    @OneToOne(mappedBy = "anuncio")
+    @OneToOne(mappedBy = "imagem")
     private Anuncio anuncio;
 }

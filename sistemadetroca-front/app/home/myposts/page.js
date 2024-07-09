@@ -1,27 +1,25 @@
 "use client";
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Navbar from '@components/navbar';
 import Cookies from 'js-cookie';
 
-export default function Proposals() {
+export default function Myposts() {
     const [proposals, setProposals] = useState([]);
     const userId = Cookies.get('UserId');
 
     useEffect(() => {
         if (userId) {
-            fetch(`http://127.0.0.1:8080/api/proposta/lista/createdBy/${userId}`)
+            fetch(`http://127.0.0.1:8080/api/anuncios/listarAnuncios/${userId}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Dados recebidos da API:', data);
 
-                    const mappedProposals = data.map(item => ({
+                    const mappedProposals = data.anuncios.map(item => ({
                         id: item.id,
-                        title: item.anuncio.titulo,
-                        description: item.anuncio.descricao,
-                        username: item.requisitante.primeiroNome + '_' + item.requisitante.sobrenome,
-                        status: item.status.nome,
-                        statusId: item.status.id,
+                        title: item.titulo,
+                        description: item.descricao,
+                        username: item.criador.primeiroNome + ' ' + item.criador.sobrenome,
+                        status: item.status,
                         date: item.dataDeProposta
                     }));
 
@@ -31,28 +29,18 @@ export default function Proposals() {
         }
     }, [userId]);
 
-    const handleAcceptProposal = (id) => {
-        fetch(`http://127.0.0.1:8080/api/proposta/aceitar/${id}`, {
-            method: 'POST',
+    const handleChangeStatus = (id) => {
+        fetch(`http://127.0.0.1:8080/api/anuncios/alterarStatus/${id}`, {
+            method: 'PATCH',
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Proposta aceita:', data);
-            window.location.reload();
+            console.log('Status do anúncio alterado:', data);
+            setProposals(proposals.map(proposal => 
+                proposal.id === id ? { ...proposal, status: false } : proposal
+            ));
         })
-        .catch(error => console.error('Erro ao aceitar proposta:', error));
-    };
-
-    const handleRejectProposal = (id) => {
-        fetch(`http://127.0.0.1:8080/api/proposta/recusar/${id}`, {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Proposta recusada:', data);
-            window.location.reload();
-        })
-        .catch(error => console.error('Erro ao recusar proposta:', error));
+        .catch(error => console.error('Erro ao alterar status do anúncio:', error));
     };
 
     return (
@@ -66,10 +54,6 @@ export default function Proposals() {
                                 <h1 className="text-xl font-bold">{proposal.title}</h1>
                                 <span className="text-gray-600">@{proposal.username}</span>
                             </div>
-                            <div className='flex'>
-                                <label>Situação: </label>
-                                <span>{proposal.status}</span>
-                            </div>
                         </div>
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700">
@@ -81,16 +65,9 @@ export default function Proposals() {
                         </div>
                         <div className="flex justify-end space-x-4">
                             <button
-                                onClick={() => handleRejectProposal(proposal.id)}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
-                                disabled={proposal.statusId !== 1}>
-                                Recusar
-                            </button>
-                            <button
-                                onClick={() => handleAcceptProposal(proposal.id)}
-                                className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600"
-                                disabled={proposal.statusId !== 1}>
-                                Aceitar
+                                onClick={() => handleChangeStatus(proposal.id)}
+                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600">
+                                Alterar Status
                             </button>
                         </div>
                     </div>

@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
-
 const CreateExchange = () => {
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [categoria, setCategoria] = useState('');
   const [categorias, setCategorias] = useState([]);
+  const [imagem, setImagem] = useState(null);
   // const router = useRouter();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const CreateExchange = () => {
 
   const handleSubmit = async () => {
     try {
-      const userId = Cookies.get('UserId')
+      const userId = Cookies.get('UserId');
       const dataToSend = {
         titulo: titulo,
         descricao: descricao,
@@ -39,26 +39,43 @@ const CreateExchange = () => {
         idDepartamento: Number(categoria)
       };
 
-      console.log(dataToSend)
-
-      fetch('http://127.0.0.1:8080/api/anuncios/criarAnuncio', {
-        method:'POST',
-        headers:{
+      const response = await fetch('http://127.0.0.1:8080/api/anuncios/criarAnuncio', {
+        method: 'POST',
+        headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(dataToSend)
+      });
 
-        body: JSON.stringify(dataToSend) 
-      }).then(data =>{
-        return data.json()
-      }).then(data =>{
-        console.log(data)
-      })
+      if (response.ok) {
+        const result = await response.json();
+        const anuncioId = result.anuncio.id;
 
-      alert('Criado com sucesso!')
-      console.log(dataToSend)
+        if (imagem) {
+          const formData = new FormData();
+          formData.append('file', imagem);
+
+          const uploadResponse = await fetch(`http://127.0.0.1:8080/api/anuncios/upload/${anuncioId}`, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (uploadResponse.ok) {
+            alert('Anúncio e imagem criados com sucesso!');
+          } else {
+            alert('Anúncio criado, mas erro ao fazer upload da imagem.');
+          }
+        } else {
+          alert('Anúncio criado com sucesso!');
+        }
+      } else {
+        console.error('Erro ao criar anúncio:', response.statusText);
+        alert('Erro ao criar anúncio.');
+      }
 
     } catch (error) {
       console.error('Erro ao enviar cadastro:', error);
+      alert('Erro ao enviar cadastro.');
     }
   };
 
@@ -99,6 +116,16 @@ const CreateExchange = () => {
                 rows="5"
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
+                className="border-2 border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:border-[#F26329]"
+              />
+
+              <label htmlFor="imagem" className="text-[#F26329] mt-4 mb-2 block">Imagem</label>
+              <input
+                type="file"
+                id="imagem"
+                name="imagem"
+                accept="image/*"
+                onChange={(e) => setImagem(e.target.files[0])}
                 className="border-2 border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:border-[#F26329]"
               />
 

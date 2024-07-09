@@ -21,6 +21,10 @@ const NavBar = () => {
                     <Link href="/home/proposals">
                         <span className="highlighted-links hover:underline">Propostas</span>
                     </Link>
+                    <Link 
+                        href="http://localhost:3000/home/myposts" className="highlighted-links hover:underline">Meus anuncios
+                        
+                    </Link>
                 </nav>
             </div>
         </div>

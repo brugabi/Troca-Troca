@@ -48,16 +48,16 @@ const ViewMore = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(proposalData)
-      }).then(data =>{
+      }).then(data => {
         return data.json()
-      }).then(data =>{
+      }).then(data => {
         console.log(data)
       })
 
       alert('enviado com sucesso!')
       console.log(proposalData)
 
-      
+
     } catch (error) {
       console.error('Erro ao enviar proposta:', error);
     }
@@ -73,7 +73,17 @@ const ViewMore = () => {
       <div className="flex flex-col w-full p-4">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/2 p-4">
-            <Image src={post.image || 'https://via.placeholder.com/400x200'} width={400} height={200} className="w-full h-auto" alt={post.titulo} />
+            <div key={post.id} className="bg-white shadow-md rounded-md overflow-hidden">
+              {post.imagemUrl && (
+                <Image
+                  src={`http://127.0.0.1:8080/${post.imagemUrl}`}
+                  alt={post.titulo}
+                  className="w-full h-48 object-contain"
+                  width={500} // Largura da imagem
+                  height={300} // Altura da imagem
+                />
+              )}
+            </div>
             <div className="bg-white shadow-md rounded-md p-4 mt-4">
               <h2 className="text-xl font-bold">{post.titulo}</h2>
               <div className="flex items-center mt-4">

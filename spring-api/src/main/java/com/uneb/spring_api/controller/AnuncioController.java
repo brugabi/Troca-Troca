@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.uneb.spring_api.dto.AnuncioDTO;
 import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Departamento;
-import com.uneb.spring_api.models.Imagem;
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AnuncioService;
 import com.uneb.spring_api.service.DepartamentoService;

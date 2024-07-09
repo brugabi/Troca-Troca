@@ -1,6 +1,5 @@
 package com.uneb.spring_api.service;
 
-import com.uneb.spring_api.models.Anuncio;
 import com.uneb.spring_api.models.Proposta;
 import com.uneb.spring_api.repositories.PropostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

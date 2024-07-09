@@ -24,6 +24,9 @@ public class Proposta extends RepresentationModel<Proposta> implements Serializa
     @ManyToOne
     private Anuncio anuncio;
 
+    @Column(columnDefinition = "TEXT")
+    private String mensagem = null;
+
     @ManyToOne
     @NotNull(message = "O anuncio deve ter um status")
     private Status status;

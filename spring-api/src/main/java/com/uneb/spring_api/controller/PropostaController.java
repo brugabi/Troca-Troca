@@ -64,6 +64,7 @@ public class PropostaController {
             proposta.setAnuncio(anuncio.get());
             proposta.setStatus(status.get());
             proposta.setDataDeProposta(LocalDateTime.now());
+            proposta.setMensagem(propostaDTO.mensagem());
 
             propostaService.criarProposta(proposta);
             response.put("proposta", proposta);

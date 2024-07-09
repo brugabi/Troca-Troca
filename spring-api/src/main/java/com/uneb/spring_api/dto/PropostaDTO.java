@@ -6,7 +6,7 @@ public record PropostaDTO(
 
         @NotNull Long idRequisitante,
         @NotNull Long idAnuncio,
-        @NotNull String textoProposta
+        @NotNull String mensagem
 
 ) {
 }

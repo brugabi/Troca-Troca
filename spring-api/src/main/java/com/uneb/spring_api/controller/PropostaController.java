@@ -97,6 +97,25 @@ public class PropostaController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @PostMapping("/confirmar/{id}")
+    public ResponseEntity<Map<String,Object>> confirmarProposta(@PathVariable Long id){
+
+        // Alterando a proposta na tabela
+        Optional<Proposta> propostaConfrimar = propostaService.obterProposta(id);
+        Optional<Status> statusDeConfrimado = statusService.obterStatus(4L);
+        propostaConfrimar.get().setStatus(statusDeConfrimado.get());
+        propostaService.atualizarProposta(propostaConfrimar.get());
+
+        // Alterar status do anuncio
+        Anuncio anuncio = propostaConfrimar.get().getAnuncio();
+        anuncio.setStatus(false);
+        anuncioService.atualizarStatusAnuncio(anuncio);
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("message","Proposta Confirmada!");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
     @PostMapping("/recusar/{id}")
     public ResponseEntity<Map<String,Object>> recusarProposta(@PathVariable Long id){
 

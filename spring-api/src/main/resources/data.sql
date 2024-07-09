@@ -113,3 +113,8 @@ INSERT INTO status (nome)
 SELECT * FROM (SELECT 'Cancelado') AS tmp WHERE NOT EXISTS (
     SELECT nome FROM status WHERE nome = 'Cancelado'
 ) LIMIT 1;
+
+INSERT INTO status (nome)
+SELECT * FROM (SELECT 'Confirmado') AS tmp WHERE NOT EXISTS (
+    SELECT nome FROM status WHERE nome = 'Confirmado'
+) LIMIT 1;

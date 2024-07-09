@@ -38,7 +38,7 @@ const ViewMore = () => {
     const proposalData = {
       idRequisitante: Number(idRequisitante),
       idAnuncio: Number(post.id),
-      textoProposta: suggestion
+      mensagem: suggestion
     };
 
     try {

@@ -22,7 +22,8 @@ export default function Proposals() {
                         username: item.requisitante.primeiroNome + '_' + item.requisitante.sobrenome,
                         status: item.status.nome,
                         statusId: item.status.id,
-                        date: item.dataDeProposta
+                        date: item.dataDeProposta,
+                        mensagem: item.mensagem
                     }));
 
                     setProposals(mappedProposals);
@@ -76,8 +77,9 @@ export default function Proposals() {
                                 Descrição da Proposta
                             </label>
                             <p className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
-                                {proposal.description}
+                                {proposal.mensagem}
                             </p>
+                            {console.log(proposal.mensagem)}
                         </div>
                         <div className="flex justify-end space-x-4">
                             <button

@@ -16,20 +16,24 @@ public class UserService {
     private UserRepository userRepository;
 
     public User criarUsuario(User user) {
+        //coloca a data de cadastro
         user.setDataDeCadastro(LocalDateTime.now());
+        //salva no banco de dados
         return userRepository.save(user);
     }
 
     public List<User> listarUsuarios() {
         return userRepository.findAll();
     }
-
+    //procura o usuario pelo id
     public Optional<User> verUsuario(Long id) {
         return userRepository.findById(id);
     }
-
+    //atualiza o usuario
     public User atualizarUsuario(Long id, User user) {
+        //procura o usuario por id
         Optional<User> usuarioExistente = userRepository.findById(id);
+        //verifica se ele existe e atualiza
         if (usuarioExistente.isPresent()) {
             User usuarioParaAtualizar = usuarioExistente.get();
             usuarioParaAtualizar.setPrimeiroNome(user.getPrimeiroNome());

@@ -71,10 +71,10 @@ public class PropostaController {
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
     }
-
+    //procura a proposta pelo criador
     @GetMapping("/lista/createdBy/{userId}")
     public List<Proposta> listarPropostaByUser(@PathVariable Long userId) {
-        System.out.println("body" + userId);
+        System.out.println("body" + userId); 
         return propostaService.listarPropostasByUserId(userId);
     }
 

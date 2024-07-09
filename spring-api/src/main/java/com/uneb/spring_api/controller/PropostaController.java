@@ -78,6 +78,14 @@ public class PropostaController {
         return propostaService.listarPropostasByUserId(userId);
     }
 
+    @GetMapping("lista/requisitante/{userId}")
+    public List<Proposta> listarPropostaByRequisitante(@PathVariable Long userId) {
+        System.out.println("body" + userId);
+        return propostaService.listarPropostasByRequisitante(userId);
+    }
+    
+    
+
     @PostMapping("/aceitar/{id}")
     public ResponseEntity<Map<String,Object>> aceitarProposta(@PathVariable Long id){
 
@@ -87,32 +95,8 @@ public class PropostaController {
         propostaAAceitar.get().setStatus(statusDeAceito.get());
         propostaService.atualizarProposta(propostaAAceitar.get());
 
-        // Alterar status do anuncio
-        Anuncio anuncio = propostaAAceitar.get().getAnuncio();
-        anuncio.setStatus(false);
-        anuncioService.atualizarStatusAnuncio(anuncio);
-
         Map<String,Object> response = new HashMap<>();
         response.put("message","Proposta aceita!");
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
-
-    @PostMapping("/confirmar/{id}")
-    public ResponseEntity<Map<String,Object>> confirmarProposta(@PathVariable Long id){
-
-        // Alterando a proposta na tabela
-        Optional<Proposta> propostaConfrimar = propostaService.obterProposta(id);
-        Optional<Status> statusDeConfrimado = statusService.obterStatus(4L);
-        propostaConfrimar.get().setStatus(statusDeConfrimado.get());
-        propostaService.atualizarProposta(propostaConfrimar.get());
-
-        // Alterar status do anuncio
-        Anuncio anuncio = propostaConfrimar.get().getAnuncio();
-        anuncio.setStatus(false);
-        anuncioService.atualizarStatusAnuncio(anuncio);
-
-        Map<String,Object> response = new HashMap<>();
-        response.put("message","Proposta Confirmada!");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
@@ -130,5 +114,63 @@ public class PropostaController {
         response.put("message","Proposta recusada!");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @PostMapping("/confirmarPeloCriador/{id}")
+    public ResponseEntity<Map<String,Object>> confirmarPropostaPeloCriador(@PathVariable Long id) {
+        Optional<Proposta> propostaOptional = propostaService.obterProposta(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (propostaOptional.isPresent()) {
+            Proposta proposta = propostaOptional.get();
+            proposta.setCriadorConfirmou(true);
+
+            if (proposta.isRequisitanteConfirmou()) {
+                Optional<Status> statusConfirmado = statusService.obterStatus(4L);
+                if (statusConfirmado.isPresent()) {
+                    proposta.setStatus(statusConfirmado.get());
+                    proposta.getAnuncio().setStatus(false);
+                    anuncioService.atualizarStatusAnuncio(proposta.getAnuncio());
+                }
+            }
+
+            propostaService.atualizarProposta(proposta);
+
+            response.put("message", "Proposta confirmada pelo criador.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("error", "Proposta não encontrada.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/confirmarPeloRequisitante/{id}")
+    public ResponseEntity<Map<String,Object>> confirmarPropostaPeloRequisitante(@PathVariable Long id) {
+        Optional<Proposta> propostaOptional = propostaService.obterProposta(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (propostaOptional.isPresent()) {
+            Proposta proposta = propostaOptional.get();
+            proposta.setRequisitanteConfirmou(true);
+
+            if (proposta.isCriadorConfirmou()) {
+                Optional<Status> statusConfirmado = statusService.obterStatus(4L);
+                if (statusConfirmado.isPresent()) {
+                    proposta.setStatus(statusConfirmado.get());
+                    proposta.getAnuncio().setStatus(false);
+                    anuncioService.atualizarStatusAnuncio(proposta.getAnuncio());
+                }
+            }
+
+            propostaService.atualizarProposta(proposta);
+
+            response.put("message", "Proposta confirmada pelo requisitante.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("error", "Proposta não encontrada.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
 }

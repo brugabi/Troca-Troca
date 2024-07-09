@@ -26,6 +26,18 @@ public class PropostaService {
         return propostaRepository.findAll();
     }
 
+    public List<Proposta> listarPropostasByRequisitante(Long userId) {
+        List<Proposta> todas = listarPropostas();
+        List<Proposta> resultado = new ArrayList<>();
+        for (Proposta proposta : todas) {
+            if (Objects.equals(proposta.getRequisitante().getId(), userId)) {
+                resultado.add(proposta);
+            }
+        }
+        return resultado;
+    }
+    
+
     public List<Proposta> listarPropostasByUserId(Long userId) {
         List<Proposta> todas = listarPropostas();
         List<Proposta> resultado = new ArrayList<>();
@@ -40,5 +52,6 @@ public class PropostaService {
     public Proposta atualizarProposta(Proposta propostaAtualizada) {
         return propostaRepository.save(propostaAtualizada);
     }
+    
 
 }

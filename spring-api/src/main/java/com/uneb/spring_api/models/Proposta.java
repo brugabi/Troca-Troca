@@ -3,6 +3,9 @@ package com.uneb.spring_api.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
@@ -16,8 +19,11 @@ public class Proposta extends RepresentationModel<Proposta> implements Serializa
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @NotNull(message = "O requisitante deve ser inserido!")
     @ManyToOne
+    @Getter
+    @Setter
     private User requisitante;
 
     @NotNull(message = "O anuncio deve ser inserido!")
@@ -33,4 +39,12 @@ public class Proposta extends RepresentationModel<Proposta> implements Serializa
 
     @NotNull
     private LocalDateTime dataDeProposta;
+
+    @Getter
+    @Setter
+    private boolean criadorConfirmou = false;
+
+    @Getter
+    @Setter
+    private boolean requisitanteConfirmou = false;
 }

@@ -23,6 +23,7 @@ public record AnuncioDTO(
 
         // @NotNull (message = "O ID da imagem deve ser informado")
         // Long idImagem
+
 ) {
         @Override
         public @NotBlank(message = "O título deve ser informado.") @Size(min = 2, max = 255, message = "O título deve ter entre 2 e 255 caracteres.") String titulo() {

@@ -1,5 +1,6 @@
 package com.uneb.spring_api.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.uneb.spring_api.dto.AnuncioDTO;
 import com.uneb.spring_api.models.Anuncio;
@@ -72,6 +75,28 @@ public class AnuncioController {
         } else {
             response.put("error","Ou o departamento ou o criador nao existe.");
             return new ResponseEntity<>(response,HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<?> uploadImagem(@RequestParam("file") MultipartFile file, @PathVariable Long id){
+        try {
+            String filePath = fileStorageService.storeFile(file);
+            Optional<Anuncio> anuncio_upload = anuncioService.verAnuncio(id);
+            Map<String,Object> response = new HashMap<>();
+            if (anuncio_upload.isPresent()) {
+                Anuncio anuncio = anuncio_upload.get();
+                anuncio.setImagemUrl(filePath);
+
+                anuncioService.atualizarStatusAnuncio(anuncio);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            else {
+                response.put("error", "Anúncio não encontrado. Não foi possível salvar a imagem.");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }     
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Tristeza");
         }
     }
 

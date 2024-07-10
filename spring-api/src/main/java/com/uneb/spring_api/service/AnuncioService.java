@@ -50,7 +50,7 @@ public class AnuncioService {
         // Apenas atualiza o status do anúncio no banco de dados
         anuncioRepository.save(anuncio);
     }
-    public List<Anuncio> buscarPorTermo(String termo) {
-        return anuncioRepository.findByTituloContainingIgnoreCase(termo);
+    public List<Anuncio> buscarPorTitulo(String titulo){
+        return anuncioRepository.findByTituloContainingIgnoreCase(titulo);
     }
 }

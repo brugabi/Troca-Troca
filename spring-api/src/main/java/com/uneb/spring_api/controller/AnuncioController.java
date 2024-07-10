@@ -102,8 +102,8 @@ public class AnuncioController {
     }
 
     @GetMapping("/busca")
-    public List<Anuncio> buscarAnuncios (@RequestParam String termo) {
-        return anuncioService.buscarPorTermo(termo);
+    public List<Anuncio> buscarAnuncios (@RequestParam String titulo) {
+        return anuncioService.buscarPorTitulo(titulo);
     }
 
     @GetMapping("/{id}")

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uneb.spring_api.models.User;
 import com.uneb.spring_api.service.AuthService;
 
-@RestController
+@RestController // Rora para autenticação no site, retorna o id do usuário
 public class AuthController {
 
     @Autowired

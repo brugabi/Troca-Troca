@@ -20,7 +20,7 @@ public class DepartamentoController {
     @Autowired
     private DepartamentoService departamentoService;
 
-    @PostMapping("/criar")
+    @PostMapping("/criar") // rota de criação de departamento
     public ResponseEntity<Map<String, Object>> criarDepartamento(@RequestBody DepartamentoDTO departamentoDTO) {
         Departamento departamento = new Departamento(); 
         Map<String, Object> response = new HashMap<>(); //instanciando objeto para uma resposta estruturada
@@ -32,7 +32,7 @@ public class DepartamentoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/listar") // rota para listar todos os departamentos
     public List<Map<String,Object>> listarDepartamentos() {
         return departamentoService.listarDepartamentos(); //listar todos os departamentos
     }

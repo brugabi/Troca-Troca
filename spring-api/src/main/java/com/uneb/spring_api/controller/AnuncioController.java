@@ -53,16 +53,17 @@ public class AnuncioController {
     
 
 
-    @PostMapping("/criarAnuncio") // Rota usada para criar
+    @PostMapping("/criarAnuncio") // Rota usada para criar um anuncio
     public ResponseEntity<Map<String, Object>> createAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO) {
-        Anuncio anuncio = new Anuncio();
-        Map<String,Object> response = new HashMap<>();
-        response.put("datetime",LocalDateTime.now());
-        Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador());
-        Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento());
+        Anuncio anuncio = new Anuncio(); // Intanciando um novo objeto anuncio
+        Map<String,Object> response = new HashMap<>(); // Instanciando um objeto response para estruturar a saída
+        response.put("datetime",LocalDateTime.now()); // timestamp
+        Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador()); // procurando o usuário baseado no id passado
+        Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento()); // procurando o deparatamento com o id passado
 
         
-        if (criador.isPresent() && departamento.isPresent()) {
+        if (criador.isPresent() && departamento.isPresent()) { // Verificando se ambos usuario e departamento existem
+            // Dfinindo as propriedades do objeto que será salvo no banco
             anuncio.setTitulo(anuncioDTO.titulo());
             anuncio.setDescricao(anuncioDTO.descricao());
             anuncio.setCriador(criador.get());
@@ -72,10 +73,10 @@ public class AnuncioController {
             
             anuncioService.criarAnuncio(anuncio);
             response.put("anuncio",anuncio);
-            return new ResponseEntity<>(response,HttpStatus.OK);
+            return new ResponseEntity<>(response,HttpStatus.OK); // Retorna o anuncio
         } else {
             response.put("error","Ou o departamento ou o criador nao existe.");
-            return new ResponseEntity<>(response,HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(response,HttpStatus.NOT_ACCEPTABLE); // Retorna um erro
         }
     }
 
@@ -101,26 +102,26 @@ public class AnuncioController {
         }
     }
 
-    @GetMapping("/busca")
+    @GetMapping("/busca") //
     public List<Anuncio> buscarAnuncios (@RequestParam String titulo) {
         return anuncioService.buscarPorTitulo(titulo);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // rota para buscar um anuncio pelo titulo
     public ResponseEntity<Map<String,Object>> verAnuncio(@PathVariable Long id) {
-        Optional<Anuncio> anuncio = anuncioService.verAnuncio(id);
+        Optional<Anuncio> anuncio = anuncioService.verAnuncio(id); // procurando as infomrações do anuncio baseado no id
         Map<String,Object> response = new HashMap<>();
         response.put("datetime",LocalDateTime.now());
-        if (anuncio.isPresent()) {
+        if (anuncio.isPresent()) { // verifica se o anuncio existe
             response.put("anuncio",anuncio.get());
-            return new ResponseEntity<>(response,HttpStatus.OK);
+            return new ResponseEntity<>(response,HttpStatus.OK); // retorna as informações do anuncio e status 200
         }else{
             response.put("Error","Anuncio nao encontrado.");
-            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND); // retonra erro
         }
     }
 
-    @GetMapping("/listarAnuncios")
+    @GetMapping("/listarAnuncios") // rota para listar todos os anuncios
     public ResponseEntity<Map<String, Object>> listarAnuncio() {
         Map<String,Object> response = new HashMap<>();
         response.put("Datetime", LocalDateTime.now());
@@ -128,14 +129,14 @@ public class AnuncioController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/listar/categoria/{idCategoria}")
+    @GetMapping("/listar/categoria/{idCategoria}") // rota para listar todos os anuncios baseado na categoria
     public List<Anuncio> getMethodName(@PathVariable Long idCategoria) {
         System.out.println(idCategoria);
         return anuncioService.listarAnuncioByCategoryId(idCategoria);
     }
     
 
-    @GetMapping("/listarAnuncios/{userId}")
+    @GetMapping("/listarAnuncios/{userId}") // rota para listar todos os anuncios baseado no usuario que criou
     public ResponseEntity<Map<String,Object>> getAnunciosByUserId(@PathVariable Long userId) {
         Optional<User> criador = userService.verUsuario(userId);
         Map<String,Object> response = new HashMap<>();
@@ -149,7 +150,7 @@ public class AnuncioController {
         }
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{id}") // rota para deletar um anuncio
     public ResponseEntity<Map<String, Object>> deletarAnuncio(@PathVariable Long id) {
         Optional<Anuncio> anuncio = anuncioService.verAnuncio(id);
         Map<String,Object> response = new HashMap<>();
@@ -164,7 +165,7 @@ public class AnuncioController {
         }
     }
 
-    @PatchMapping("/alterarStatus/{id}")
+    @PatchMapping("/alterarStatus/{id}") // rota para alterar o status
     public ResponseEntity<Map<String, Object>> alterarStatusAnuncio(@PathVariable Long id) {
     Optional<Anuncio> optionalAnuncio = anuncioService.verAnuncio(id);
     Map<String,Object> response = new HashMap<>();

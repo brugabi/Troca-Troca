@@ -42,7 +42,7 @@ public class PropostaController {
     @Autowired
     private StatusService statusService;
 
-    @PostMapping("/criar")
+    @PostMapping("/criar") // rota para criar uma proposta
     public ResponseEntity<Map<String,Object>> createProposta(@RequestBody PropostaDTO propostaDTO) {
         Proposta proposta = new Proposta();
         System.out.println("recena" + propostaDTO);
@@ -50,16 +50,17 @@ public class PropostaController {
         Optional<User> requisitante = userService.verUsuario(propostaDTO.idRequisitante());
         Optional<Anuncio> anuncio = anuncioService.verAnuncio(propostaDTO.idAnuncio());
         Optional<Status> status = statusService.obterStatus(1L);
-        if (!requisitante.isPresent()){
+        if (!requisitante.isPresent()){ // verificar se o id do requisitante existe
             response.put("message","Requisitante não existe no banco de usuários");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        } else if (!anuncio.isPresent()) {
+        } else if (!anuncio.isPresent()) { //  verifica se o id do anunncio existe
             response.put("message","O anuncio informado não foi achado.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        } else if (!status.isPresent()) {
+        } else if (!status.isPresent()) { // verifica se o status existe
             response.put("message","O status infomrado não foi achado no banco de dados.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         } else {
+            // passando as informações do dto para o objeto Proposta final
             proposta.setRequisitante(requisitante.get());
             proposta.setAnuncio(anuncio.get());
             proposta.setStatus(status.get());
@@ -71,6 +72,7 @@ public class PropostaController {
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
     }
+
     //procura a proposta pelo criador
     @GetMapping("/lista/createdBy/{userId}")
     public List<Proposta> listarPropostaByUser(@PathVariable Long userId) {
@@ -78,20 +80,21 @@ public class PropostaController {
         return propostaService.listarPropostasByUserId(userId);
     }
 
+    // Retorna a lista de proposta baseado no id do usuário quem efetuou a requisição
     @GetMapping("lista/requisitante/{userId}")
     public List<Proposta> listarPropostaByRequisitante(@PathVariable Long userId) {
         System.out.println("body" + userId);
         return propostaService.listarPropostasByRequisitante(userId);
     }
     
-    
-
+    // Rota para uma proposta ser aceita
     @PostMapping("/aceitar/{id}")
     public ResponseEntity<Map<String,Object>> aceitarProposta(@PathVariable Long id){
 
         // Alterando a proposta na tabela
         Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);
         Optional<Status> statusDeAceito = statusService.obterStatus(2L);
+        Optional<Anuncio> anuncioEmQuestao = anuncioService.verAnuncio(propostaAAceitar.getAnuncio())
         propostaAAceitar.get().setStatus(statusDeAceito.get());
         propostaService.atualizarProposta(propostaAAceitar.get());
 
@@ -100,6 +103,7 @@ public class PropostaController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    // Rota para uma proposta ser recusada
     @PostMapping("/recusar/{id}")
     public ResponseEntity<Map<String,Object>> recusarProposta(@PathVariable Long id){
 
@@ -115,6 +119,7 @@ public class PropostaController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    // rota para confirmação do criador
     @PostMapping("/confirmarPeloCriador/{id}")
     public ResponseEntity<Map<String,Object>> confirmarPropostaPeloCriador(@PathVariable Long id) {
         Optional<Proposta> propostaOptional = propostaService.obterProposta(id);
@@ -143,6 +148,7 @@ public class PropostaController {
         }
     }
 
+    // rota de confirmação pelo requisitante
     @PostMapping("/confirmarPeloRequisitante/{id}")
     public ResponseEntity<Map<String,Object>> confirmarPropostaPeloRequisitante(@PathVariable Long id) {
         Optional<Proposta> propostaOptional = propostaService.obterProposta(id);

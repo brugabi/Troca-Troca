@@ -12,7 +12,7 @@ public class StatusService {
 
     @Autowired
     private StatusRepository statusRepository;
-
+    //procura o status pelo id
     public Optional<Status> obterStatus(Long id) {
         return statusRepository.findById(id);
     }

@@ -60,7 +60,7 @@ public class AnuncioController {
         response.put("datetime",LocalDateTime.now());
         Optional<User> criador = userService.verUsuario(anuncioDTO.idCriador());
         Optional<Departamento> departamento = departamentoService.verDepartamento(anuncioDTO.idDepartamento());
-        //Optional<Imagem> imagem = fileStorageService.obterImagem(anuncioDTO.idImagem());
+
         
         if (criador.isPresent() && departamento.isPresent()) {
             anuncio.setTitulo(anuncioDTO.titulo());
@@ -68,8 +68,7 @@ public class AnuncioController {
             anuncio.setCriador(criador.get());
             anuncio.setDepartamento(departamento.get());
             anuncio.setStatus(true);
-            //anuncio.setImagem(imagem.get());
-            
+
             
             anuncioService.criarAnuncio(anuncio);
             response.put("anuncio",anuncio);

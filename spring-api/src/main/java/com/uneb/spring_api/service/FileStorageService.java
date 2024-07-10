@@ -14,12 +14,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileStorageService {
+    //coloca esse valor que esta na application.properties na uploadDir
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    //servico para salvar a img na pasta uploads
     public String storeFile(MultipartFile file) throws IOException {
+        //define o url final da img
         Path filePath = Paths.get(uploadDir).resolve(file.getOriginalFilename());
+        //copia o conteudo da img para o destino especificado
         Files.copy(file.getInputStream(), filePath);
+        //retorna o caminho da img
         return filePath.toString();
     }
 

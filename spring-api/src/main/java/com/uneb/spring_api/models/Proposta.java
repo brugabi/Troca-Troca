@@ -26,7 +26,10 @@ public class Proposta extends RepresentationModel<Proposta> implements Serializa
     @Setter
     private User requisitante;
 
+
     @NotNull(message = "O anuncio deve ser inserido!")
+    @Getter
+    @Setter
     @ManyToOne
     private Anuncio anuncio;
 

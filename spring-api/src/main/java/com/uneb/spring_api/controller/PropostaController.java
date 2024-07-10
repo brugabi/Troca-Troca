@@ -92,11 +92,15 @@ public class PropostaController {
     public ResponseEntity<Map<String,Object>> aceitarProposta(@PathVariable Long id){
 
         // Alterando a proposta na tabela
+        Proposta teste = new Proposta();
+
         Optional<Proposta> propostaAAceitar = propostaService.obterProposta(id);
         Optional<Status> statusDeAceito = statusService.obterStatus(2L);
-        Optional<Anuncio> anuncioEmQuestao = anuncioService.verAnuncio(propostaAAceitar.getAnuncio())
+
+        Optional<Anuncio> anuncioEmQuestao = anuncioService.verAnuncio(propostaAAceitar.get().getAnuncio().getId());
         propostaAAceitar.get().setStatus(statusDeAceito.get());
         propostaService.atualizarProposta(propostaAAceitar.get());
+
 
         Map<String,Object> response = new HashMap<>();
         response.put("message","Proposta aceita!");

@@ -16,7 +16,7 @@ const PostCards = () => {
                 console.log('UserId:', userId); 
                 console.log('Data:', data.Lista); 
                 
-                const filteredPosts = data.Lista.filter(post => String(post.criador.id) !== String(userId));
+                const filteredPosts = data.Lista.filter(post => String(post.criador.id) !== String(userId) && post.status === true);
                 setPosts(filteredPosts);
                 console.log('Filtered Posts:', filteredPosts);
             } catch (error) {
@@ -50,8 +50,8 @@ const PostCards = () => {
                                 src={`http://127.0.0.1:8080/${post.imagemUrl}`} 
                                 alt={post.titulo} 
                                 className="w-full h-48 object-contain"
-                                width={500} // Largura da imagem
-                                height={300} // Altura da imagem
+                                width={500} 
+                                height={300} 
                             />
                         )}
                         <div className="p-4 items-start">

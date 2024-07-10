@@ -113,11 +113,12 @@ const CreateExchange = () => {
               <textarea
                 id="descricao"
                 name="descricao"
-                rows="5"
+                rows="4"  // Defina o número de linhas desejado
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
-                className="border-2 border-gray-300 rounded-md px-4 py-3 w-full focus:outline-none focus:border-[#F26329]"
+                className="border-2 border-gray-300 resize-none rounded-md px-4 py-3 w-full focus:outline-none focus:border-[#F26329] overflow-wrap break-word"
               />
+
 
               <label htmlFor="imagem" className="text-[#F26329] mt-4 mb-2 block">Imagem</label>
               <input

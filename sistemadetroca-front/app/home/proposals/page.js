@@ -1,6 +1,5 @@
-"use client";
+"use client"
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Navbar from '@components/navbar';
 import Cookies from 'js-cookie';
 
@@ -23,7 +22,8 @@ export default function Proposals() {
                         status: item.status.nome,
                         statusId: item.status.id,
                         date: item.dataDeProposta,
-                        mensagem: item.mensagem
+                        mensagem: item.mensagem,
+                        criadorId: item.anuncio.criador.id,
                     }));
 
                     setProposals(mappedProposals);
@@ -44,7 +44,19 @@ export default function Proposals() {
         .catch(error => console.error('Erro ao aceitar proposta:', error));
     };
 
-    const handleRejectProposal = (id) => {
+    const handleConfirmProposalByCreator = (id) => {
+        fetch(`http://127.0.0.1:8080/api/proposta/confirmarPeloCriador/${id}`, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Proposta confirmada pelo criador:', data);
+            window.location.reload();
+        })
+        .catch(error => console.error('Erro ao confirmar proposta pelo criador:', error));
+    };
+
+    const handleCancelProposal = (id) => {
         fetch(`http://127.0.0.1:8080/api/proposta/recusar/${id}`, {
             method: 'POST',
         })
@@ -79,21 +91,32 @@ export default function Proposals() {
                             <p className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm sm:text-sm">
                                 {proposal.mensagem}
                             </p>
-                            {console.log(proposal.mensagem)}
                         </div>
                         <div className="flex justify-end space-x-4">
-                            <button
-                                onClick={() => handleRejectProposal(proposal.id)}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
-                                disabled={proposal.statusId !== 1}>
-                                Recusar
-                            </button>
-                            <button
-                                onClick={() => handleAcceptProposal(proposal.id)}
-                                className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600"
-                                disabled={proposal.statusId !== 1}>
-                                Aceitar
-                            </button>
+                            {proposal.statusId === 1 && proposal.criadorId === parseInt(userId) && (
+                                <>
+                                    <button
+                                        onClick={() => handleAcceptProposal(proposal.id)}
+                                        className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600"
+                                    >
+                                        Aceitar
+                                    </button>
+                                    <button
+                                        onClick={() => handleCancelProposal(proposal.id)}
+                                        className="px-4 py-2 bg-gray-500 text-white rounded-md shadow-md hover:bg-gray-600"
+                                    >
+                                        Recusar
+                                    </button>
+                                </>
+                            )}
+                            {proposal.statusId === 2 && proposal.criadorId === parseInt(userId) && (
+                                <button
+                                    onClick={() => handleConfirmProposalByCreator(proposal.id)}
+                                    className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
+                                >
+                                    Confirmar
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}

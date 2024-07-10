@@ -26,7 +26,7 @@ export default function Login() {
         const data = await response.json();
         const userId = data;
         Cookies.set("UserId", userId)
-        alert(data)
+        alert('Login concluído!')
         console.log('Login concluído! ID do usuário:', userId);
         router.push('/home');
       } else {
@@ -48,8 +48,8 @@ export default function Login() {
                 <span className="text-white text-[35px]">Seja bem vindo!</span>
               </div>
               <div className="flex w-[50%] p-3 bg-slate-100 rounded-sm gap-1">
-                <Image src="/icons/mail_black.svg" alt="User Icon" width={25} height={25} />
-                <input value={login} onChange={(e) => setUsername(e.target.value)} className="w-[90%] bg-slate-100 focus:outline-none" placeholder="Email"></input>
+                <Image src="/icons/user_black.svg" alt="User Icon" width={25} height={25} />
+                <input value={login} onChange={(e) => setUsername(e.target.value)} className="w-[90%] bg-slate-100 focus:outline-none" placeholder="Nome de usuário"></input>
               </div>
               <div className="flex w-[50%] p-3 bg-slate-100 rounded-sm gap-1">
                 <Image src="/icons/lock_black.svg" alt="User Icon" width={25} height={25} />

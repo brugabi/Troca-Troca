@@ -101,6 +101,11 @@ public class AnuncioController {
         }
     }
 
+    @GetMapping("/busca")
+    public List<Anuncio> buscarAnuncios (@RequestParam String termo) {
+        return anuncioService.buscarPorTermo(termo);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Map<String,Object>> verAnuncio(@PathVariable Long id) {
         Optional<Anuncio> anuncio = anuncioService.verAnuncio(id);

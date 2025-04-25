@@ -1,14 +1,36 @@
-# Sistemas-de-Troca
-Uma plataforma web de sistemas de troca de usuario
+# 🛒 Sistema de Trocas entre Usuários
 
-# Back-End
-## Execução dos containers
-Executar no terminal e na pasta root do projeto (Vai iniciar a aplicação - até então só temos o banco de dados mysql):
-~~~bash
-docker compose up -d
-~~~
+## Descrição
+Aplicação web onde usuários podem cadastrar produtos e anunciar trocas com outros usuários. O sistema simula uma plataforma de negociação, permitindo o envio e gerenciamento de propostas. Possui autenticação e interface interativa.
 
-## Execução do Gerenciador de container (Dica)
-~~~bash
-docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
-~~~
+## Tecnologias Utilizadas
+- **Backend**: Java, Spring Boot  
+- **Frontend**: React  
+- **Banco de Dados**: MySQL  
+- **Containerização**: Docker  
+
+## Funcionalidades
+- Cadastro e login de usuários com autenticação.
+- Criação, visualização e exclusão de anúncios.
+- Envio de propostas de troca entre usuários.
+- Aceitação ou recusa de propostas.
+- Interface em React para interação com as funcionalidades do sistema.
+- Banco de dados containerizado com Docker para ambiente de desenvolvimento.
+
+## Como Executar
+1. Clone o repositório.
+2. Inicie o container MySQL com Docker:
+   ```bash
+   docker-compose up -d
+   ```
+3. Configure o `application.properties` com as credenciais do banco.
+4. Execute a aplicação Spring Boot.
+5. Na pasta do frontend (`/frontend`), rode:
+   ```bash
+   npm install
+   npm start
+   ```
+
+## Observações
+- É necessário ter Docker e Node.js instalados.
+- O banco de dados inicializa automaticamente com as tabelas necessárias.
